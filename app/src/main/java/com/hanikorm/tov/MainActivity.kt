@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
 
         val editTextProductName = findViewById<EditText>(R.id.editTextProductName)
         val button = findViewById<Button>(R.id.button)
-        val buttonExit = findViewById<Button>(R.id.buttonExit)
 
         button.setOnClickListener {
             val productName = editTextProductName.text.toString()
