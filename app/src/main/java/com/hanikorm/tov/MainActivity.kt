@@ -20,10 +20,6 @@ class MainActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.button)
         val buttonExit = findViewById<Button>(R.id.buttonExit)
 
-        buttonExit.setOnClickListener {
-            showExitDialog()
-        }
-
         button.setOnClickListener {
             val productName = editTextProductName.text.toString()
             if (isValidProductName(productName)){
@@ -34,31 +30,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showExitDialog(){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Выход")
-        builder.setMessage("Вы уверенны, что хотите выйти?")
-
-        builder.setPositiveButton("Да") {_, _->
-            finishAffinity()
-        }
-
-        builder.setNegativeButton("Нет") {dialog, _ ->
-            dialog.dismiss()
-        }
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
-
     private fun isValidProductName(productName: String): Boolean {
-        if (productName.isEmpty() || productName[0].isLowerCase() || productName[0].isDigit() || productName[0] == ' '){
+        if (productName.isEmpty() || productName[0] !in 'А'..'Я' && productName[0] != 'Ё') {
             return false
         }
+
         for (char in productName) {
-            if (!char.isLetter() && !char.isDigit() && char != ' ' || char < 'А' || char > 'я' && char != 'Ё' && char != 'ё') {
+            if (!char.isLetter() && !char.isDigit() && char != ' ') {
+                return false
+            }
+            if ((char in 'А'..'я').not() && char != 'Ё' && char != 'ё' && !char.isDigit() && char != ' ') {
                 return false
             }
         }
+
         return true
     }
+
 }
